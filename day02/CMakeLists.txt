@@ -1,2 +1,6 @@
 add_executable(day02part1 "./part1.cpp")
+target_include_directories(day02part1 PRIVATE "../intcode")
+target_link_libraries(day02part1 PRIVATE intcode)
 add_executable(day02part2 "./part2.cpp")
+target_include_directories(day02part2 PRIVATE "../intcode")
+target_link_libraries(day02part2 PRIVATE intcode)

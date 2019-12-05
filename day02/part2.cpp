@@ -5,13 +5,7 @@
 
 #include <boost/algorithm/string.hpp>
 
-enum class OP_CODES {
-    ADD = 1,
-    MUL = 2,
-    FIN = 99
-};
-
-void run(std::vector<int>& program, int pos);
+#include "intcode.hpp"
 
 int main() {
     std::string in;
@@ -35,7 +29,7 @@ int main() {
             auto program_to_run{program};
             program_to_run[1] = i;
             program_to_run[2] = j;
-            run(program_to_run, 0);
+            intcode::run(program_to_run, 0);
             if (program_to_run[0] == 19690720) {
                 std::cout << std::setw(2) << std::setfill('0') << i << j << '\n';
                 found = true;
@@ -44,21 +38,4 @@ int main() {
     }
 
     return EXIT_SUCCESS;
-}
-
-void run(std::vector<int>& program, int pos) {
-    switch(static_cast<OP_CODES>(program[pos])) {
-        case OP_CODES::ADD: {
-            const int target_pos = program[pos + 3];
-            program[target_pos] = program[program[pos + 1]] + program[program[pos + 2]];
-            return run(program, pos + 4);
-        }
-        case OP_CODES::MUL: {
-            const int target_pos = program[pos + 3];
-            program[target_pos] = program[program[pos + 1]] * program[program[pos + 2]];
-            return run(program, pos + 4);
-        }
-        case OP_CODES::FIN:
-            return;
-    }
 }
